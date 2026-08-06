@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Paleta: grafito + cobre, inspirada en el propio rubro de la empresa */
+  --color-graphite-950: #14171F;
+  --color-graphite-900: #1F2430;
+  --color-graphite-800: #2A3040;
+  --color-graphite-700: #3A4256;
+  --color-graphite-400: #8891A8;
+  --color-graphite-200: #D5D9E3;
+
+  --color-copper-600: #A5622E;
+  --color-copper-500: #C17A3E;
+  --color-copper-400: #D89A5F;
+  --color-copper-100: #F4E4D3;
+
+  --color-canvas: #F7F6F3;
+  --color-canvas-raised: #FFFFFF;
+
+  --color-success: #3D8361;
+  --color-warning: #C17A3E;
+  --color-danger: #B54545;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-graphite-900);
+  font-family: var(--font-sans);
+}
+
+/* Foco de teclado visible, accesibilidad */
+:focus-visible {
+  outline: 2px solid var(--color-copper-500);
+  outline-offset: 2px;
+}

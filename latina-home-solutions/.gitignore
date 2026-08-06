@@ -1,0 +1,33 @@
+# Entorno virtual
+venv/
+env/
+.venv/
+
+# Variables de entorno (contiene datos sensibles: password de la base, SECRET_KEY)
+.env
+
+# Cache y bytecode de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribución / empaquetado
+build/
+dist/
+*.egg-info/
+
+# Herramientas y entornos de testing/cobertura
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Editor / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

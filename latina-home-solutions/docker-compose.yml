@@ -1,0 +1,71 @@
+services:
+# ARCHIVO: docker-compose.yml
+# Entorno: Producción - Stack completo (BD + API + Frontend)
+  db:
+    image: postgres:17
+
+    container_name: erp_electrico_db
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: erp_electrico
+      POSTGRES_USER: erp_user
+      POSTGRES_PASSWORD: erp_pass
+
+    ports:
+      - "5433:5432" #Esto mapea el puerto 5433 de tu máquina al 5432 interno del contenedor, sin tocar el otro proyecto
+    volumes:
+      - erp_pgdata:/var/lib/postgresql/data
+      - ./schema_erp.sql:/docker-entrypoint-initdb.d/01_schema.sql
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U erp_user -d erp_electrico"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: .
+    container_name: erp_electrico_api
+
+    restart: unless-stopped
+
+    environment:
+      DATABASE_URL: postgresql+psycopg2://erp_user:erp_pass@db:5432/erp_electrico
+      SECRET_KEY: ${SECRET_KEY:-cambiar-esto-por-una-clave-larga-y-aleatoria}
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 60
+      ENVIRONMENT: production
+
+    ports:
+      - "8000:8000" # API directa y docs en http://localhost:8000/docs
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: ../erp-frontend
+      args:
+        VITE_API_URL: /api
+    container_name: erp_electrico_frontend
+
+    restart: unless-stopped
+
+    ports:
+      - "80:80" # App en http://localhost (nginx + reverse proxy a la API)
+
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  erp_pgdata:

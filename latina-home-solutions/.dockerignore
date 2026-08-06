@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+.env
+.git
+.github
+app.rar
+docs/
+tests/
+docker/

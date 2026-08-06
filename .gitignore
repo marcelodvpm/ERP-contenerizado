@@ -1,0 +1,32 @@
+# Entornos virtuales y dependencias
+venv/
+env/
+.venv/
+node_modules/
+
+# Variables de entorno (secretos: password de BD, SECRET_KEY)
+.env
+
+# Cache y build
+__pycache__/
+*.py[cod]
+dist/
+*.egg-info/
+.pytest_cache/
+
+# Artefactos de empaquetado
+*.rar
+*.zip
+*.tar
+
+# Imágenes Docker exportadas
+erp-images.tar
+
+# Editor / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
